@@ -1,0 +1,16 @@
+services:
+  db:
+    container_name: postgres-nest-uno
+    image: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - PGDATA=/data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - '5332:5432'
+    restart: unless-stopped
+
+volumes:
+  db:
