@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './services/users/users.service';
 import { GetUsersElem, GetUsersQuery } from './dto/get-users';
 import { ApiExtraModels, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { CreateUserBody, CreateUserResponse } from './dto/create-user';
+import { error } from 'console';
 
 @Controller('users')
 export class UsersController {
@@ -19,5 +28,13 @@ export class UsersController {
   // 4. powinny byc podstawowe walidacje typu mail etc
   // 5. zwraca id usera
   @Post()
-  async createUser(@Body() body: )
+  async createUser(@Body() body: CreateUserBody) {
+    const res = await this.usersService.CreateUser(body);
+
+    if (res.isOk()) {
+      return res.value;
+    } else {
+      throw new BadRequestException(res.error);
+    }
+  }
 }

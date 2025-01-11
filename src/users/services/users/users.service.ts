@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 import { PrismaProviderService } from 'src/prisma/services/prisma-provider/prisma-provider.service';
+import { CreateUserBody, CreateUserResponse } from 'src/users/dto/create-user';
 import { GetUsersElem } from 'src/users/dto/get-users';
+import * as bcrypt from 'bcrypt';
+import { Err, Ok, Result } from 'ts-results-es';
 
 @Injectable() //wstrzyknij prisma provider service
 export class UsersService {
@@ -39,5 +42,28 @@ export class UsersService {
     //zwróc liste użytkowników wg kryteriów
   }
 
-  async CreateUser(params: );
+  async CreateUser(
+    params: CreateUserBody,
+  ): Promise<Result<CreateUserResponse, BaseError>> {
+    //dodać walidacje
+    const salt = await bcrypt.genSalt();
+
+    if (
+      (await this.prisma.user.count({ where: { email: params.email } })) > 0
+    ) {
+      return new Err({ message: 'User with this email already exists!' });
+    }
+
+    const createdUser = await this.prisma.user.create({
+      data: {
+        name: params.name,
+        surname: params.surname,
+        email: params.email,
+        dateOfBirth: params.dateOfBirth,
+        passwordHash: await bcrypt.hash(params.password, salt),
+      },
+    });
+
+    return new Ok({ id: createdUser.id });
+  }
 }

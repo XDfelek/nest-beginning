@@ -2,15 +2,19 @@ import { ApiProperty } from '@nestjs/swagger';
 
 class CreateUserBody {
   @ApiProperty()
-  name: String;
+  name: string;
   @ApiProperty()
-  surname: String;
+  surname: string;
   @ApiProperty()
-  email: String;
+  email: string;
   @ApiProperty()
   dateOfBirth: Date;
   @ApiProperty()
-  password: String;
+  password: string;
 }
 
-export { CreateUserBody };
+class CreateUserResponse {
+  id: string;
+}
+
+export { CreateUserBody, CreateUserResponse };
