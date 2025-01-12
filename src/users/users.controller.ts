@@ -5,12 +5,20 @@ import {
   Get,
   Post,
   Query,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { UsersService } from './services/users/users.service';
 import { GetUsersElem, GetUsersQuery } from './dto/get-users';
-import { ApiExtraModels, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiExtraModels,
+  ApiParam,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { CreateUserBody, CreateUserResponse } from './dto/create-user';
 import { error } from 'console';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -36,5 +44,12 @@ export class UsersController {
     } else {
       throw new BadRequestException(res.error);
     }
+  }
+
+  @ApiBearerAuth('jwt')
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
