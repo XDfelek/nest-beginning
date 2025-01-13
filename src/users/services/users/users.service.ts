@@ -42,6 +42,8 @@ export class UsersService {
     //zwróc liste użytkowników wg kryteriów
   }
 
+  async DeleteUser() {}
+
   async CreateUser(
     params: CreateUserBody,
   ): Promise<Result<CreateUserResponse, BaseError>> {

@@ -7,6 +7,7 @@ import {
   Query,
   UseGuards,
   Request,
+  Delete,
 } from '@nestjs/common';
 import { UsersService } from './services/users/users.service';
 import { GetUsersElem, GetUsersQuery } from './dto/get-users';
@@ -24,6 +25,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class UsersController {
   //w kontrolerach nie może być żadnej logiki
   constructor(private readonly usersService: UsersService) {}
+
+  @Delete()
+  async deleteUser() {}
 
   @Get()
   async getUsers(@Query() query: GetUsersQuery): Promise<GetUsersElem[]> {
