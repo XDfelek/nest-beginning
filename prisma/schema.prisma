@@ -20,4 +20,15 @@ model User{
   email String @unique
   dateOfBirth DateTime
   passwordHash String
+  posts Post[]
+}
+
+model Post{
+  id String @id @default(uuid())
+  content String
+  tags String[]
+  createdAt DateTime
+  updatedAt DateTime?
+  creator User @relation(fields: [creatorId], references: [id])
+  creatorId String
 }

@@ -36,6 +36,11 @@ export class AuthService {
       fullName: `${user.name} ${user.surname}`,
     };
 
-    return new Ok({ access_token: await this.jwtService.signAsync(payload) });
+    //expires do zmiany
+    return new Ok({
+      access_token: await this.jwtService.signAsync(payload, {
+        expiresIn: '2 days',
+      }),
+    });
   }
 }

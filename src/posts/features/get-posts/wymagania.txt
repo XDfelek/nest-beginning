@@ -1,0 +1,2 @@
+query params (opcjonalne): creatorId?, minCreatedAt?, maxCreatedAt?
+zwracasz: content + tags + creatorId

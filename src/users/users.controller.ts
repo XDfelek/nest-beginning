@@ -13,6 +13,7 @@ import { UsersService } from './services/users/users.service';
 import { GetUsersElem, GetUsersQuery } from './dto/get-users';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiExtraModels,
   ApiParam,
   ApiResponse,
@@ -40,6 +41,7 @@ export class UsersController {
   // 4. powinny byc podstawowe walidacje typu mail etc
   // 5. zwraca id usera
   @Post()
+  @ApiBody({ type: CreateUserBody })
   async createUser(@Body() body: CreateUserBody) {
     const res = await this.usersService.CreateUser(body);
 
