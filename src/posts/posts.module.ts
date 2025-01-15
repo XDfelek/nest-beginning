@@ -5,10 +5,12 @@ import CreatePostCommandHandler from './features/create-post/create-post.handler
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { AuthModule } from 'src/auth/auth.module';
 import GetPostsCommandHandler from './features/get-posts/get-posts.handler';
+import EditPostCommand from './features/edit-post/edit-post.command';
 
 export const CommandHandlers = [
   CreatePostCommandHandler,
   GetPostsCommandHandler,
+  EditPostCommand,
 ];
 
 @Module({
