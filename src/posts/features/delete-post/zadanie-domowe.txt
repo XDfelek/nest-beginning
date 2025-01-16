@@ -1,2 +1,2 @@
-dodać edit, delete, get posts details
+dodać -edit, -delete, get posts details
 przy edit delete ma sprawdzać czy id twórcy zgadza się z zalogowanym uż, jak nie to Err (używamy result patterna do wszystkich 3 w/w)

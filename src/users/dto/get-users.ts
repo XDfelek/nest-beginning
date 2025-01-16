@@ -9,7 +9,6 @@ import { UUID } from 'crypto';
 class GetUsersQuery {
   @ApiPropertyOptional({
     description: 'Searches users with age above that number',
-    example: '69',
   })
   minAge?: number;
 }

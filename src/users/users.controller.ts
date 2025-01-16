@@ -27,9 +27,13 @@ export class UsersController {
   //w kontrolerach nie może być żadnej logiki
   constructor(private readonly usersService: UsersService) {}
 
+  @ApiBearerAuth('jwt')
+  @UseGuards(AuthGuard)
   @Delete()
   async deleteUser() {}
 
+  @ApiBearerAuth('jwt')
+  @UseGuards(AuthGuard)
   @Get()
   async getUsers(@Query() query: GetUsersQuery): Promise<GetUsersElem[]> {
     return await this.usersService.GetUsers(query);

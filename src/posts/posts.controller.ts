@@ -8,6 +8,8 @@ import {
   Query,
   Get,
   Put,
+  Param,
+  Delete,
 } from '@nestjs/common';
 import CreatePostCommand from './features/create-post/create-post.command';
 import { CommandBus } from '@nestjs/cqrs';
@@ -18,6 +20,8 @@ import { GetPostsRequest } from './features/get-posts/get-posts.request';
 import GetPostsCommand from './features/get-posts/get-posts.command';
 import { EditPostRequest } from './features/edit-post/edit-post.request';
 import EditPostCommand from './features/edit-post/edit-post.command';
+import { DeletePostRequest } from './features/delete-post/delete-post.request';
+import DeletePostCommand from './features/delete-post/delete-post.command';
 
 @Controller('posts')
 export class PostsController {
@@ -56,6 +60,21 @@ export class PostsController {
   async editPost(@Body() body: EditPostRequest, @Request() req) {
     const res = await this.commandBus.execute(
       new EditPostCommand(req.user.id, body.postId, body.content, body.tags),
+    );
+
+    if (res.isOk()) {
+      return res.value;
+    } else {
+      throw new BadRequestException(res.error);
+    }
+  }
+
+  @ApiBearerAuth('jwt')
+  @UseGuards(AuthGuard)
+  @Delete(':postId')
+  async deletePost(@Param() param: DeletePostRequest, @Request() req) {
+    const res = await this.commandBus.execute(
+      new DeletePostCommand(req.user.id, param.postId),
     );
 
     if (res.isOk()) {
