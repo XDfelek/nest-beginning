@@ -1,8 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { PrismaProviderService } from 'src/prisma/services/prisma-provider/prisma-provider.service';
+import { BaseError } from 'src/utils/errors';
+import { Ok, Result } from 'ts-results-es';
+
 import CreatePostCommand from './create-post.command';
 import { CreatePostDto } from './create-post.dto';
-import { Err, Ok, Result } from 'ts-results-es';
-import { PrismaProviderService } from 'src/prisma/services/prisma-provider/prisma-provider.service';
 
 @CommandHandler(CreatePostCommand)
 export default class CreatePostCommandHandler

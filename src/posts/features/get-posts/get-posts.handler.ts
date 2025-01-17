@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import GetPostsCommand from './get-posts.command';
-import { Err, Result } from 'ts-results-es';
 import { PrismaProviderService } from 'src/prisma/services/prisma-provider/prisma-provider.service';
+
+import GetPostsCommand from './get-posts.command';
 import { GetPostsDto, PostDto } from './get-posts.dto';
 
 @CommandHandler(GetPostsCommand)

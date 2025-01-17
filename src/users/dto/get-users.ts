@@ -1,10 +1,4 @@
-import {
-  ApiOkResponse,
-  ApiProperty,
-  ApiPropertyOptional,
-  ApiResponse,
-} from '@nestjs/swagger';
-import { UUID } from 'crypto';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 class GetUsersQuery {
   @ApiPropertyOptional({
@@ -21,4 +15,4 @@ class GetUsersElem {
   age: number;
 }
 
-export { GetUsersQuery, GetUsersElem };
+export { GetUsersElem, GetUsersQuery };

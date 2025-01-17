@@ -1,5 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
-
 export default class CreatePostCommand {
   constructor(
     public readonly content: string,

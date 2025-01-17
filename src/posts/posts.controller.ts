@@ -2,26 +2,30 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Post,
-  UseGuards,
-  Request,
-  Query,
-  Get,
-  Put,
-  Param,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
-import CreatePostCommand from './features/create-post/create-post.command';
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiError, ThrowError } from 'src/utils/errors';
+import { Result } from 'ts-results-es';
+
+import CreatePostCommand from './features/create-post/create-post.command';
 import { CreatePostRequest } from './features/create-post/create-post.request';
-import { GetPostsRequest } from './features/get-posts/get-posts.request';
-import GetPostsCommand from './features/get-posts/get-posts.command';
-import { EditPostRequest } from './features/edit-post/edit-post.request';
-import EditPostCommand from './features/edit-post/edit-post.command';
-import { DeletePostRequest } from './features/delete-post/delete-post.request';
 import DeletePostCommand from './features/delete-post/delete-post.command';
+import { DeletePostDto } from './features/delete-post/delete-post.dto';
+import { DeletePostRequest } from './features/delete-post/delete-post.request';
+import EditPostCommand from './features/edit-post/edit-post.command';
+import { EditPostRequest } from './features/edit-post/edit-post.request';
+import GetPostsCommand from './features/get-posts/get-posts.command';
+import { GetPostsRequest } from './features/get-posts/get-posts.request';
 
 @Controller('posts')
 export class PostsController {
@@ -73,14 +77,16 @@ export class PostsController {
   @UseGuards(AuthGuard)
   @Delete(':postId')
   async deletePost(@Param() param: DeletePostRequest, @Request() req) {
-    const res = await this.commandBus.execute(
-      new DeletePostCommand(req.user.id, param.postId),
-    );
+    //otypowanie komendy (podpowiedzi z commandBus.execute)
+    const res = await this.commandBus.execute<
+      DeletePostCommand, //komenda
+      Result<DeletePostDto, ApiError> //zwrotka
+    >(new DeletePostCommand(req.user.id, param.postId));
 
     if (res.isOk()) {
       return res.value;
     } else {
-      throw new BadRequestException(res.error);
+      ThrowError(res.error);
     }
   }
 }

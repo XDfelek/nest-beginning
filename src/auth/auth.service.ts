@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { SignInRequestBody, SignInResponse } from './dto/sign-in';
-import { Err, Ok, Result } from 'ts-results-es';
-import { PrismaProviderService } from 'src/prisma/services/prisma-provider/prisma-provider.service';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { PrismaProviderService } from 'src/prisma/services/prisma-provider/prisma-provider.service';
+import { BaseError } from 'src/utils/errors';
+import { Err, Ok, Result } from 'ts-results-es';
+
+import { SignInRequestBody, SignInResponse } from './dto/sign-in';
 
 @Injectable()
 export class AuthService {

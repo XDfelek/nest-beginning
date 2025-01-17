@@ -1,13 +1,13 @@
-import { Delete, Module } from '@nestjs/common';
-import { PostsController } from './posts.controller';
+import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import CreatePostCommandHandler from './features/create-post/create-post.handler';
-import { PrismaModule } from 'src/prisma/prisma.module';
 import { AuthModule } from 'src/auth/auth.module';
-import GetPostsCommandHandler from './features/get-posts/get-posts.handler';
-import EditPostCommand from './features/edit-post/edit-post.command';
-import EditPostCommandHandler from './features/edit-post/edit-post.handler';
+import { PrismaModule } from 'src/prisma/prisma.module';
+
+import CreatePostCommandHandler from './features/create-post/create-post.handler';
 import DeletePostCommandHandler from './features/delete-post/delete-post.handler';
+import EditPostCommandHandler from './features/edit-post/edit-post.handler';
+import GetPostsCommandHandler from './features/get-posts/get-posts.handler';
+import { PostsController } from './posts.controller';
 
 export const CommandHandlers = [
   CreatePostCommandHandler,

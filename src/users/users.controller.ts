@@ -2,25 +2,19 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Query,
-  UseGuards,
   Request,
-  Delete,
+  UseGuards,
 } from '@nestjs/common';
-import { UsersService } from './services/users/users.service';
-import { GetUsersElem, GetUsersQuery } from './dto/get-users';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiExtraModels,
-  ApiParam,
-  ApiResponse,
-} from '@nestjs/swagger';
-import { CreateUserBody, CreateUserResponse } from './dto/create-user';
-import { error } from 'console';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+
+import { CreateUserBody } from './dto/create-user';
+import { GetUsersElem, GetUsersQuery } from './dto/get-users';
+import { UsersService } from './services/users/users.service';
 
 @Controller('users')
 export class UsersController {

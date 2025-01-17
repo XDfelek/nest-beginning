@@ -1,5 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
-
 export default class GetPostsCommand {
   //to potrzebujemy w handlerze, zeby nie musieć pisać każdej rzeczy poniżej osobno
   constructor(

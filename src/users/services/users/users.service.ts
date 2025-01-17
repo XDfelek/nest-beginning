@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import * as moment from 'moment';
 import { PrismaProviderService } from 'src/prisma/services/prisma-provider/prisma-provider.service';
 import { CreateUserBody, CreateUserResponse } from 'src/users/dto/create-user';
 import { GetUsersElem } from 'src/users/dto/get-users';
-import * as bcrypt from 'bcrypt';
+import { BaseError } from 'src/utils/errors';
 import { Err, Ok, Result } from 'ts-results-es';
 
 @Injectable() //wstrzyknij prisma provider service
