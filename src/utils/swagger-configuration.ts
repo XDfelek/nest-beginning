@@ -1,24 +1,24 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 
 const ConfigureSwagger = (app: INestApplication<any>) => {
-  const config = new DocumentBuilder()
-    .setTitle('Starter API')
+  const cfg = new DocumentBuilder()
+    .setTitle('Eventor API')
+    .setDescription('desc')
     .setVersion('1.0')
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'JWT',
-        description: 'Enter JWT token',
-        in: 'header',
-      },
-      'jwt', // This name here is important for matching up with @ApiBearerAuth() in your controller!
-    )
+    .addBearerAuth()
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, documentFactory);
+  const document = SwaggerModule.createDocument(app, cfg);
+  const theme = new SwaggerTheme();
+  const options = {
+    explorer: true,
+    customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK),
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  };
+  SwaggerModule.setup('swagger', app, document, options);
 };
 
 export default ConfigureSwagger;
